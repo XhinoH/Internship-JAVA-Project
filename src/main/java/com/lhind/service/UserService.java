@@ -1,22 +1,14 @@
 package com.lhind.service;
 
-import com.lhind.model.entity.User;
+import com.lhind.model.dto.UserDto;
 
 import java.util.List;
 
 public interface UserService {
-
-    //Save Operation
-    User saveUser (User user);
-
-    //Read Operation
-    List<User> allUsers();
-
-    //Update Operation
-    User updateUser(User user, Long userId);
-
-    //Delete Operation
-    void deleteUserById(Long userId);
-
-
+    public UserDto save(UserDto userDto);
+    public List<UserDto> findAll();
+    public List<UserDto> findAllByRole(String roleName);
+    public UserDto findById(Integer id);
+    public UserDto addRoleToUser(Integer id, String role);
+    public UserDto delete(Integer id);
 }

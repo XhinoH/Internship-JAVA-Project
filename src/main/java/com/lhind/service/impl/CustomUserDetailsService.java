@@ -1,6 +1,5 @@
 package com.lhind.service.impl;
 
-
 import com.lhind.repository.UserRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

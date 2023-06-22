@@ -3,12 +3,13 @@ package com.lhind.model.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user_details")
-public class UserDetails {
+@Table(name = "user_detail")
+public class UserDetail {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id",nullable = false,unique = true)
-    private Long id;
+    @Column(name = "id")
+    private Integer id;
 
     @Column(name = "first_name",nullable = false)
     private String firstName;
@@ -16,29 +17,30 @@ public class UserDetails {
     @Column(name = "last_name",nullable = false)
     private String lastName;
 
-    @Column(name = "email",nullable = false,length = 30)
+    @Column(name = "email",nullable = false,unique = true)
     private String email;
 
-    @Column(name = "phone_number",nullable = false,length = 25)
+    @Column(name = "phone_number",nullable = false,unique = true)
     private String phoneNumber;
 
+    @Column(name = "address")
+    private String address;
+
     @OneToOne
-    @JoinColumn(name = "user_id",referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    public User getUser() {
-        return user;
-    }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////// GETTERS AND SETTERS /////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 
-    public Long getId() {
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -74,14 +76,19 @@ public class UserDetails {
         this.phoneNumber = phoneNumber;
     }
 
-    @Override
-    public String toString() {
-        return "UserDetails{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                '}';
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

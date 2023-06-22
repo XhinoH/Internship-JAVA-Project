@@ -1,10 +1,7 @@
 package com.lhind.model.entity;
 
-
-import com.lhind.model.enums.RoleEnum;
 import jakarta.persistence.*;
-
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -12,60 +9,35 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, unique = true)
-    private Long id;
+    @Column(name = "id")
+    private Integer id;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "password",nullable = false)
+    @Column(name = "password")
     private String password;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted = false;
+
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    @JoinTable(name = "user_roles",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
-    private List<Role> roles; //Set
+    private Set<Role> roles;
 
-    public List<Role> getRoles() {
-        return roles;
-    }
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private UserDetail userDetail;
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
 
-    @OneToOne(mappedBy = "user")
-    private UserDetails userDetails;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
-    private List<Booking> bookings;
 
-    public List<Booking> getBookings() {
-        return bookings;
-    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////// GETTERS AND SETTERS /////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
-    }
-
-    public UserDetails getUserDetails() {
-        return userDetails;
-    }
-
-    public void setUserDetails(UserDetails userDetails) {
-        this.userDetails = userDetails;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;
@@ -83,15 +55,36 @@ public class User {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", roles=" + roles +
-                ", userDetails=" + userDetails +
-                ", bookings=" + bookings +
-                '}';
+    public Boolean getDeleted() {
+        return isDeleted;
     }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public UserDetail getUserDetail() {
+        return userDetail;
+    }
+
+    public void setUserDetail(UserDetail userDetail) {
+        this.userDetail = userDetail;
+    }
+
 }
