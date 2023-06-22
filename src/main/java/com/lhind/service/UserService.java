@@ -11,4 +11,6 @@ public interface UserService {
     public UserDto findById(Integer id);
     public UserDto addRoleToUser(Integer id, String role);
     public UserDto delete(Integer id);
+    public UserDto findUserByUsername(String username);
 }
+

@@ -214,6 +214,22 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public UserDto findUserByUsername(String email) {
+        Optional<User> userOptional = userRepository.findUserByUsername(email);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            for (Role role : user.getRoles()){
+                if (role.getName().equalsIgnoreCase("role_admin")){
+                    throw new CustomRequestException("You can not view other admins info");
+                }
+            }
+            return dtoConversion.convertUser(user);
+        } else {
+            throw new NullPointerException("User not found");
+        }
+    }
+
 
     // Checking if a user with the given username exists
     public  Boolean usernameExists(String username) {

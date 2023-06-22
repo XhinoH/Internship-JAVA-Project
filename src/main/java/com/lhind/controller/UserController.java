@@ -35,9 +35,9 @@ public class UserController {
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> findAllByRole(@RequestParam String roleName){
+    public ResponseEntity<?> findByEmail(@RequestParam String username){
 
-        return ResponseEntity.ok(userService.findAllByRole(roleName));
+        return ResponseEntity.ok(userService.findUserByUsername(username));
 
     }
 
